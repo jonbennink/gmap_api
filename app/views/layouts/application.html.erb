@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>GmapApp</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application'%>
+  </head>
+
+  <body>
+    <h3>My Google Maps Demo</h3>
+    <script>
+      function initMap() {
+        var latLong = {lat: 71.503496, lng: -35.266152};
+        var image = "<%= asset_path 'mushroom.jpg'%>"
+        // 71.503496, -35.266152
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 2,
+          center: latLong,
+          scrollwheel: false
+        });
+
+
+        var marker = new google.maps.Marker({
+          position: latLong,
+          map: map,
+          title: 'The World',
+          icon: image,
+          animation: google.maps.Animation.BOUNCE
+        });
+
+        var contentString = '<h2>StrongBox West</h2>' + '<p>Where all your dreams come true.</p>';
+
+        var infowindow = new google.maps.InfoWindow({
+          content: contentString
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+          infowindow.open(map,marker);
+        });
+
+      }
+          </script>
+    <%= yield %>
+  <script sync defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDOjklNM3HqIHBm_92kl8QuMg_Dr25AQ1Y&callback=initMap">
+  </script>
+
+  </body>
+</html>
