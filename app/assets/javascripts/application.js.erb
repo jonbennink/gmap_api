@@ -1,0 +1,47 @@
+// This is a manifest file that'll be compiled into application.js, which will include all the files
+// listed below.
+//
+// Any JavaScript/Coffee file within this directory, lib/assets/javascripts, or any plugin's
+// vendor/assets/javascripts directory can be referenced here using a relative path.
+//
+// It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
+// compiled file. JavaScript code in this file should be added after the last require_* statement.
+//
+// Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
+// about supported directives.
+//
+//= require rails-ujs
+//= require turbolinks
+//= require_tree .
+
+
+function initMap() {
+  var latLong = {lat: 71.503496, lng: -35.266152};
+  var image = "<%= asset_path 'mushroom.jpg'%>"
+  // 71.503496, -35.266152
+  var map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 2,
+    center: latLong,
+    scrollwheel: false
+  });
+
+
+  var marker = new google.maps.Marker({
+    position: latLong,
+    map: map,
+    title: 'The World',
+    icon: image,
+    animation: google.maps.Animation.BOUNCE
+  });
+
+  var contentString = '<h2>StrongBox West</h2>' + '<p>Where all your dreams come true.</p>';
+
+  var infowindow = new google.maps.InfoWindow({
+    content: contentString
+  });
+
+  google.maps.event.addListener(marker, 'click', function() {
+    infowindow.open(map,marker);
+  });
+
+}
